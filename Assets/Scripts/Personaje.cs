@@ -9,7 +9,7 @@ public class Personaje : MonoBehaviour
     public float velocidad;
     PlayerInput xrInput;
     public AudioSource audioSourceJugador;
-    bool estaEnZonaSegura = true,estaAgachado=false;
+    bool estaEnZonaSegura = true, estaAgachado = false;
     Linterna linterna;
     Vector3 offset;
 
@@ -23,9 +23,9 @@ public class Personaje : MonoBehaviour
     // agacharse
     private void Update()
     {
-        if (xrInput.actions["Activate"].IsPressed()||Input.GetKeyDown(KeyCode.L))
+        if (xrInput.actions["TrigerPress"].IsPressed() || Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log("xr input derecho presionado");
+            Debug.Log("xr input trigger izquierdo presionado");
             TIPOLINTERNA tIPOLINTERNA = linterna.tipolINTERNA;
             switch (tIPOLINTERNA)
             {
@@ -41,30 +41,13 @@ public class Personaje : MonoBehaviour
                 default:
                     break;
             }
-        }
-        if (xrInput.actions["Agacharse"].IsPressed())
-        {
-            print("agachado");
-            if (estaAgachado)
+
+            if (xrInput.actions["Menu"].IsPressed())
             {
-              transform.GetChild(0).transform.position = offset;
-                estaAgachado = false;
+                print("menu activado");
             }
-            else
-            {
-                transform.GetChild(0).transform.position = offset/2;
-                estaAgachado = true;
-            }
+
         }
-        if (xrInput.actions["menu"].IsPressed())
-        {
-            print("menu activado");
-        }
-    }
-    public void Agacharse()
-    {
-        // el input debe mantenerse para mantenerse agachado
-        AudioSystem.instance.PonerSonido("agacharse", 5);
-        AudioSystem.instance.PonerSonido("agacharse", 5,2.1f,GameObject.Find("Boo").GetComponent<AudioSource>());
     }
 }
+
