@@ -374,17 +374,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2e0bfaeb-6ce1-49fe-9fbe-69651c239f6c",
-                    "path": "<XRController>{LeftHand}/pointerPosition",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR Usage",
-                    "action": "PointerPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7eaabcc7-41cd-41fc-a31c-b35b4e61efd9",
                     "path": "<XRController>{LeftHand}/pointerRotation",
                     "interactions": "",
@@ -435,6 +424,17 @@
                     "processors": "",
                     "groups": "XR Usage",
                     "action": "TriggerTouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e0bfaeb-6ce1-49fe-9fbe-69651c239f6c",
+                    "path": "<XRController>{LeftHand}/pointerPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR Usage",
+                    "action": "PointerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

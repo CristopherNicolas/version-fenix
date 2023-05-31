@@ -23,7 +23,8 @@ public class Personaje : MonoBehaviour
     // agacharse
     private void Update()
     {
-        if (xrInput.actions["TrigerPress"].IsPressed() || Input.GetKeyDown(KeyCode.L))
+       
+        if (xrInput.actions["triggerPress"].IsPressed() || Input.GetKeyDown(KeyCode.L))
         {
             Debug.Log("xr input trigger izquierdo presionado");
             TIPOLINTERNA tIPOLINTERNA = linterna.tipolINTERNA;
@@ -42,7 +43,7 @@ public class Personaje : MonoBehaviour
                     break;
             }
 
-            if (xrInput.actions["Menu"].IsPressed())
+            if (xrInput.actions["menu"].IsPressed())
             {
                 print("menu activado");
             }
