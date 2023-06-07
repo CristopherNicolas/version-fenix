@@ -17,9 +17,15 @@ public abstract class Enemigo : MonoBehaviour
     public NavMeshAgent agent;
     public Vector3 starPos;
     public bool puedeMoverse = false;// debe comenzar en falsa hasta que el jugador salga de la zona segura se activa.
-    [SerializeField] Animator animator;
+    [SerializeField]protected Animator animator;
 
     public abstract void SerAlumbrado();
+    public virtual void DejarDeSerAlumbrado()
+    {
+        
+        animator.SetBool("serAlumbrado", false);
+        //poner audio?
+    }
     public void Awake() {
         CacheComponentes();
         agent.speed = velocidadDeMovimiento;
@@ -37,7 +43,7 @@ public abstract class Enemigo : MonoBehaviour
          audioSource = GetComponent<AudioSource>();
          agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
-            destino = GameObject.Find("XR Origin").transform;
+            destino = GameObject.Find("Player").transform;
         }
         catch (System.Exception)
         {
@@ -59,5 +65,6 @@ public abstract class Enemigo : MonoBehaviour
     {
         // aqui se pueden agregar audios al detenerse
         agent.isStopped = true;
+        
     }
 }

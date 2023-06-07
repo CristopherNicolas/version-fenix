@@ -7,11 +7,13 @@ using UnityEngine;
 //el coo chileno emmi metroid
 public class EnemigoEstatico : Enemigo
 {
+    ///puede vigilar ,alerta
     public bool puedeVigilar = false;
     [SerializeField]float anguloMinimo, anguloMaximo;
     public override void SerAlumbrado()
     {
         Debug.Log("Enemigo estatico alimbrado");
+        animator.SetBool("serAlumbrado", true);
                
     }
     public override void MoverEnemigo(Vector3 destino)

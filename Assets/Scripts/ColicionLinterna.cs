@@ -14,6 +14,7 @@ public class ColicionLinterna : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemigo"))
         {
+            other.GetComponent<Enemigo>().SerAlumbrado();
             Debug.Log("Enemigo colicionado");
             linterna.enemigosDentroDeLaLuzLinterna.Add(other.gameObject);
         }
@@ -25,7 +26,8 @@ public class ColicionLinterna : MonoBehaviour
     }
     public virtual void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemigo") && linterna.enemigosDentroDeLaLuzLinterna
+        other.GetComponent<Enemigo>().DejarDeSerAlumbrado();
+         if (other.CompareTag("Enemigo") && linterna.enemigosDentroDeLaLuzLinterna
             .Exists(x => x == other.gameObject))
         {
             Debug.Log("Enemigo sale de la luz");
