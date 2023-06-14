@@ -10,11 +10,11 @@ class Key: MonoBehaviour
     [SerializeField]GameObject cerrojo;
     private void Start()
     {
-        GetComponent<BoxCollider>().isTrigger = true;
+        //GetComponent<BoxCollider>().isTrigger = true;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == cerrojo.name)
+        if (other.gameObject.name ==  cerrojo.name)
         {
             Debug.Log("Cerrojo colicionado");
             //sonido de cerrojo
