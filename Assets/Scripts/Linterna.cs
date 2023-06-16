@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using System;
 
 // se debe añadir a la linterna
 public class Linterna : MonoBehaviour
@@ -18,7 +19,8 @@ public class Linterna : MonoBehaviour
     }
     [SerializeField] float velocidadDelay = 0.01f,areaMaxima;
     [SerializeField] GameObject particulasRojas, particulasAzul, ParticulasBlancas; //  importante!! las particluas de la linterna deben tener el  componente DestruirParticulas.cs
-
+    [SerializeField]List<AudioClip> clipsLinterna;
+    [SerializeField] AudioSource linternaAudioSource;
     private void OnTriggerEnter(Collider other)
     {
         //poner sonido de tomar linterna aqui
@@ -88,6 +90,23 @@ public class Linterna : MonoBehaviour
         }
                 // agregar sonido de cambio de luz aqui
     }
+    private IEnumerator Start()
+    {
+        //StartCoroutine(CicloSinidos());
+        while (true) {
+        yield return new WaitForSeconds(3);
+            bateriaActual--;
+            if (bateriaActual <= 0) UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+    }
+
+    //private IEnumerator CicloSinidos()
+    //{
+    //    //while (true)
+    //    //{
+    //    //    yield return new WaitForSecondsRealtime(linternaAudioSource.clip.length);
+    //    //}
+    //}
 }
 public enum TIPOLINTERNA
 {

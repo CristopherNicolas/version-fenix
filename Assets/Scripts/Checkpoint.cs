@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
+using Valve.VR.InteractionSystem;
 [RequireComponent(typeof(BoxCollider))]
 
 public class Checkpoint : MonoBehaviour
-{    
+{
+    Player player;
     private IEnumerator Start()
     {
         GetComponent<BoxCollider>().isTrigger=true;
@@ -18,7 +20,7 @@ public class Checkpoint : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "XR Origin")
+        if (other.name == "XR Origin"|| other.name == player.headCollider.name|| other.transform.root.CompareTag("Player"))
         {
             Debug.Log("El jugador entro en un chckpoint, enemigosDetenidos");
             PonerEnemigosEnZonaInicial();

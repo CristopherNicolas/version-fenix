@@ -26,7 +26,7 @@ public class ColicionLinterna : MonoBehaviour
     }
     public virtual void OnTriggerExit(Collider other)
     {
-        other.GetComponent<Enemigo>().DejarDeSerAlumbrado();
+       if(other.GetComponent<Enemigo>())other.GetComponent<Enemigo>().DejarDeSerAlumbrado();
          if (other.CompareTag("Enemigo") && linterna.enemigosDentroDeLaLuzLinterna
             .Exists(x => x == other.gameObject))
         {

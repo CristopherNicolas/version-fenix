@@ -9,11 +9,15 @@ public class PuzzleRojo : MonoBehaviour
     //dada una cierta cantidad de puntos, pasar por una ruta especifica, en caso de iluminar otro punto no prendido
     // desactivar todos los enemigos de la escena.
     public List<PuzzleRojoPunto> puntosPuzle,puntosRojosAlumbrados;
-    public GameObject prefabPuzlePunto;
+    public GameObject prefabPuzlePunto,target;
+    Vector3 startPos;
+
     public virtual void Efecto()
     {
+        startPos = target.transform.position;
         print("efecto");
-        transform.DOMoveY(2,1.5f);
+        target.transform.DOMove(new Vector3(startPos.x, startPos.y + 5, startPos.z), 2);
+        transform.DOMoveY(5,2);
     }
     public void ResetearPuzzle()
     {

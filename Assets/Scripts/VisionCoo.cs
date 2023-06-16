@@ -7,16 +7,12 @@ public class VisionCoo : MonoBehaviour
     //GameObject coll
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name=="Player")
+        if (other.gameObject.name=="Player"|| other.gameObject.name == "HeadCollider")
         {
             Debug.Log("colicion con player");
                 //StartCoroutine()
         }
 
     }
-    IEnumerator Vision()
-    {
-        yield return new WaitForSeconds(3);
 
-    }
 }
