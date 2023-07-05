@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using TMPro;
 
 // se debe añadir a la linterna
 public class Linterna : MonoBehaviour
@@ -90,13 +91,84 @@ public class Linterna : MonoBehaviour
         }
                 // agregar sonido de cambio de luz aqui
     }
+
+    int i = 0;
+    public void CambiarTipoDeLinterna()
+    {
+        if (i > 2) i = 0;
+        else i++;
+        switch (i)
+        {
+            case 0: tipolINTERNA = TIPOLINTERNA.TipoLinternaBlanca; break;
+            case 1: tipolINTERNA = TIPOLINTERNA.TipoLinternaRoja; break;
+            case 2: tipolINTERNA = TIPOLINTERNA.TipoLinternaAzul; break;
+
+        }
+
+        switch (tipolINTERNA)
+        {
+            case TIPOLINTERNA.TipoLinternaRoja:
+                CambiarColorLuz(Color.red);
+                //cambiar estructura de colicionLinterna
+                transform.GetChild(1).transform.localScale
+                    = new Vector3(1.1558969f, 1.1091336f, 28.1805058f);
+                //transform.GetChild(1).transform.position = new Vector3(-0.5f, -29, 1);
+                // cambiar forma de luz de linterna
+                luzLinterna.spotAngle = 7;
+                Instantiate(particulasRojas, transform);
+                break;
+
+
+
+            case TIPOLINTERNA.TipoLinternaBlanca:
+                CambiarColorLuz(Color.white);
+                transform.GetChild(1).transform.localScale
+                    = new Vector3(12.9943323f, 11.730567f, 28.1805058f);
+                //transform.GetChild(1).transform.position = new Vector3(-0.5f, -29f, 1f);
+                luzLinterna.spotAngle = 55;
+                Instantiate(ParticulasBlancas, transform);
+                break;
+
+
+            case TIPOLINTERNA.TipoLinternaAzul:
+                CambiarColorLuz(Color.blue);
+                transform.GetChild(1).transform.localScale
+                    = new Vector3(12.9943323f, 11.730567f, 28.1805058f);
+                //  transform.GetChild(1).transform.position = new Vector3(-0.5f, -29f, 1f);
+                luzLinterna.spotAngle = 55;
+                Instantiate(particulasAzul, transform);
+                break;
+
+
+
+            default:
+                break;
+        }
+        // agregar sonido de cambio de luz aqui
+    }
+    bool warning=false;
     private IEnumerator Start()
     {
         //StartCoroutine(CicloSinidos());
         while (true) {
         yield return new WaitForSeconds(3);
             bateriaActual--;
-            if (bateriaActual <= 0) UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+            if (bateriaActual <= 0)
+            {
+                var feed = GameObject.Find("feedText").GetComponent<TMP_Text>();
+                feed.text = "te has quedado sin bateria, has perdido!";
+                yield return new WaitForSeconds(5);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            }
+            else if (bateriaActual < bateriaMax / 2 && warning == false)
+            {
+                warning = true;
+                var feed = GameObject.Find("feedText").GetComponent<TMP_Text>();
+                feed.text = "te queda la mitad de bateria en el farol!";
+                yield return new WaitForSeconds(5);
+                feed.text = "";
+            }
         }
     }
 

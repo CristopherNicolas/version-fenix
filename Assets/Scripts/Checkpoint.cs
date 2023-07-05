@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
 using Valve.VR.InteractionSystem;
+using UnityEngine.AI;
+using TMPro;
+
 [RequireComponent(typeof(BoxCollider))]
 
 public class Checkpoint : MonoBehaviour
@@ -14,27 +17,34 @@ public class Checkpoint : MonoBehaviour
     {
         GetComponent<BoxCollider>().isTrigger=true;
         yield return new WaitForSeconds(5);
-        puertaStarPos = puertaZonaSegura.transform.position;
-        AbrirPuerta();
         //poner sonido comenzar nivel
     }
-    private void OnTriggerEnter(Collider other)
+    private async void OnTriggerEnter(Collider other)
     {
-        if (other.name == "XR Origin"|| other.name == player.headCollider.name|| other.transform.root.CompareTag("Player"))
+        if (other.transform.root.name == "Player" )
         {
-            Debug.Log("El jugador entro en un chckpoint, enemigosDetenidos");
+            var feed = GameObject.Find("feedText").GetComponent<TMP_Text>();
+            feed.text = $"Entraste en la zona segura!";
+            await Task.Delay(System.TimeSpan.FromSeconds(5));
+            feed.text = "";
+
             PonerEnemigosEnZonaInicial();
             var enemigos = GameObject.FindObjectsOfType<Enemigo>().ToList();
-            enemigos.ForEach(e => { e.puedeMoverse = false; e.StopAllCoroutines();});
+            enemigos.ForEach(e => { e.puedeMoverse = false; 
+                e.StopAllCoroutines();
+                e.GetComponent<NavMeshAgent>().speed = 0;
+            });
         }
     }
 
     private async void OnTriggerExit(Collider other)
     {
-        if (other.name == "XR Origin")
+        if (other.transform.root.name == "Player")
         {
+            var feed = GameObject.Find("feedText").GetComponent<TMP_Text>();
+            feed.text = "Saliste de la zona segura, encuentra a tu hermano!";
             await Task.Delay(System.TimeSpan.FromSeconds(5));
-            Debug.Log("El jugador salio del chckpoint, los enemigos se mueven despues de 10 segundos");
+            feed.text = "";
             ActivarMovimientoEnemigos();   
         }
     }
@@ -42,6 +52,7 @@ public class Checkpoint : MonoBehaviour
     {
         var enemigos = GameObject.FindObjectsOfType<Enemigo>().ToList();
         enemigos.ForEach(e => e.puedeMoverse=true);
+        enemigos.ForEach(e => e.GetComponent<NavMeshAgent>().speed = e.velocidadDeMovimiento);
         
     }
     void PonerEnemigosEnZonaInicial()
@@ -51,9 +62,6 @@ public class Checkpoint : MonoBehaviour
     }
     [SerializeField] GameObject puertaZonaSegura;
     Vector3 puertaStarPos;
-    void AbrirPuerta()
-    {
-        puertaZonaSegura.transform.DOMoveZ(3, 2);
-    }
+    
 
 }

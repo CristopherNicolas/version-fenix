@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
+using System.Threading.Tasks;
+
 public class PuzzleRojo : MonoBehaviour
 {
     // todo se produce en base que la luz activada sea roja.
@@ -12,12 +15,17 @@ public class PuzzleRojo : MonoBehaviour
     public GameObject prefabPuzlePunto,target;
     Vector3 startPos;
 
-    public virtual void Efecto()
+    public virtual async void Efecto()
     {
         startPos = target.transform.position;
-        print("efecto");
+        // sonido de abrir puerta 
+        AudioSystem.instance.PonerSonido("sonido reja");
         target.transform.DOMove(new Vector3(startPos.x, startPos.y + 5, startPos.z), 2);
-        transform.DOMoveY(5,2);
+
+        var feed = GameObject.Find("feedText").GetComponent<TMP_Text>();
+        feed.text = "Se ha abierto una puerta";
+        await Task.Delay(3000);
+        feed.text = "";
     }
     public void ResetearPuzzle()
     {
@@ -26,11 +34,12 @@ public class PuzzleRojo : MonoBehaviour
     }
     public bool Comprobar()
     {
-        if(puntosRojosAlumbrados.Count != puntosPuzle.Count) { Debug.Log("no hay suficientes puntos alumbrados"); return false;}
-        bool []  arr = new bool[puntosPuzle.Count]; 
-        for (int i = 0; i < puntosRojosAlumbrados.Count; i++)
-    arr[i] = puntosRojosAlumbrados[i] == puntosPuzle[i] ? true : false;
-        if (arr.All(x => x == true)) return true; else return false;            
+        print($"cuenta en puzzle : {puntosPuzle.Count}  --- alumbrados: {puntosRojosAlumbrados.Count}");
+        if (puntosRojosAlumbrados.Count == puntosPuzle.Count)
+        {
+            return true;
+        }
+        else return false;
     }
 
     [ContextMenu("generar puntos")]

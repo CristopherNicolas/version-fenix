@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(AudioSource))]
@@ -13,12 +15,14 @@ public class Personaje : MonoBehaviour
     Linterna linterna;
     Vector3 offset;
 
-    public void Start()
+    public async void Start()
     {
         linterna = GameObject.FindObjectOfType<Linterna>();
         xrInput = GetComponent<PlayerInput>();
         audioSourceJugador = GetComponent<AudioSource>();
         offset = transform.GetChild(0).transform.position;
+
+        await Task.Delay(TimeSpan.FromSeconds(audioSourceJugador.clip.length));
     }
     // agacharse
     private void Update()

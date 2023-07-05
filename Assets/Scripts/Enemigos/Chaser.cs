@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 //culebron
 public class Chaser : Enemigo
 {
@@ -20,6 +24,16 @@ public class Chaser : Enemigo
     {
 
             base.MoverEnemigo(destino);      
+    }
+    async void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.root.name == "Player")
+        {
+            var feed = GameObject.Find("feedText").GetComponent<TMP_Text>();
+            feed.text = "El culebron te deboro";
+            await Task.Delay(3500);
+            SceneManager.LoadScene(0);
+        }
     }
     IEnumerator Timer()
     {

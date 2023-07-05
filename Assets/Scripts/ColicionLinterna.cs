@@ -22,6 +22,7 @@ public class ColicionLinterna : MonoBehaviour
         {
             var puzzle = other.transform.parent.GetComponent<PuzzleRojo>();
             other.GetComponent<PuzzleRojoPunto>().PrenderPunto();
+            if (puzzle.Comprobar()) puzzle.Efecto();
         }
     }
     public virtual void OnTriggerExit(Collider other)

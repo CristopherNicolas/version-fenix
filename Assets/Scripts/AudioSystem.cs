@@ -27,9 +27,9 @@ public class AudioSystem : MonoBehaviour
     /// </summary>
     /// <param name="nombreAudio"></param>
     /// <param name="delay"></param>
-    public async void PonerSonido(string nombreAudio, float pitch, float delay = 0,  AudioSource source = null)
+    public async void PonerSonido(string nombreAudio, float delay = 0,  AudioSource source = null)
     {
-        if (source == null) globalAudioSource.pitch = pitch; else source.pitch = pitch;
+        //if (source == null) globalAudioSource.pitch = pitch; else source.pitch = pitch;
         AudioClip clip = audios.Where(c => c.name == nombreAudio).First();
         if (clip == null)
         { print("no hay audio con ese nombre"); return; }
